@@ -6,7 +6,7 @@
 package gui;
 import java.awt.*;
 import javax.swing.*;
-import gui.SQLConection.*;
+import gui.SQLConnection.*;
 /**
  *
  * @author jtx
@@ -76,11 +76,19 @@ public class guiSistema extends javax.swing.JFrame {
          */
         try {
             UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
+            UIManager.put( "Button.arc", 999 );
+            UIManager.put( "Component.arc", 999 );
+            UIManager.put( "ProgressBar.arc", 999 );
+            UIManager.put( "TextComponent.arc", 999 );
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
         //</editor-fold>
-
+        
+        //Iniciamos conexion sqllite
+        SQLConnection sqlConnection = new SQLConnection();
+        //sqlConnection.listTables("../HotelDB.sqlite");
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
