@@ -6,6 +6,7 @@
 package gui;
 import java.awt.*;
 import javax.swing.*;
+import gui.SQLConection.*;
 /**
  *
  * @author jtx
