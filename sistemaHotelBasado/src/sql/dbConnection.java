@@ -27,11 +27,11 @@ public class dbConnection {
 
             // Cargar el driver de SQLite
             Class.forName("org.sqlite.JDBC");
-            System.out.println("Driver cargado exitosamente.");
+            //System.out.println("Driver cargado exitosamente.");
 
             // Conectar a la base de datos
             con = DriverManager.getConnection(url);
-            System.out.println("Conexión exitosa!");
+            //System.out.println("Conexión exitosa!");
         } catch (ClassNotFoundException e) {
             System.out.println("Error: Driver de SQLite no encontrado.");
             e.printStackTrace();
