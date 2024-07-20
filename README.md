@@ -1,6 +1,6 @@
 # Proyecto Hotel Basado
 
-## ToDo
+## NOTA: Integrar al netbeans las bibliotecas de la carpeta "libraries", son necesarias. SI hay un error con respecto a que no se encuentra el paquete libawta o algo asi, click derecho en "library" y añadir "absolute layout".
 
 ### Formularios / Módulos
 1. **Login**
