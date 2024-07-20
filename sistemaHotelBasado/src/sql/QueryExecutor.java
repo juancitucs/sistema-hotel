@@ -11,6 +11,8 @@ public class QueryExecutor {
         String query = "SELECT * FROM usuarios"; // Consulta SQL aquí
         executeAndPrintQuery(query);
     }
+    
+    
 
     public static void executeAndPrintQuery(String query) {
         Connection con = dbConnection.connect(); // <---- conexion
