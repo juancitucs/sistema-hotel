@@ -6,7 +6,7 @@
 1. **Login**
 
 2. **Modulo Selector Empleado**
-   - **mHabitaciones**
+   - **mHabitaciones** (juancitux)
       - RU
    - **mReservas**
       - CRUD 
@@ -17,7 +17,7 @@
    - ****
 
 3. **Modulo Selector Admin**
-   - **mHabitaciones**
+   - **mHabitaciones** (juancitux)
       - CRUD
    - **mReservas**
       - CRUD
