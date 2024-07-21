@@ -73,7 +73,7 @@
               <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="id" type="java.lang.Object"/>
                 <Column editable="false" title="Nombre" type="java.lang.Object"/>
-                <Column editable="false" title="Apellido" type="java.lang.Object"/>
+                <Column editable="false" title="Contrase&#xf1;a" type="java.lang.Object"/>
                 <Column editable="false" title="rol" type="java.lang.Boolean"/>
                 <Column editable="false" title="Creaci&#xf3;n" type="java.lang.Object"/>
                 <Column editable="false" title="Actualizaci&#xf3;n" type="java.lang.Object"/>

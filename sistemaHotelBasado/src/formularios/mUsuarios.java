@@ -4,28 +4,31 @@
  */
 package formularios;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import sql.dbConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import sql.dbConnection;
 
 /**
  *
  * @author jtx
  */
 public class mUsuarios extends javax.swing.JFrame {
-    
-    private DefaultTableModel tableModel;
 
-    
+    //private DefaultTableModel tableModel;
 
     public class Usuario {
+
         private int id;
         private String nombre;
         private String contrasena;
@@ -73,16 +76,15 @@ public class mUsuarios extends javax.swing.JFrame {
     /**
      * Creates new form mUsuarios
      */
-    public mUsuarios(){
+    public mUsuarios() {
         initComponents();
         conn = dbConnection.connect();
-        populateTable();
+        rellenarTabla();
     }
 
     /**
      * Creates new form mUsuarios2
      */
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,7 +117,7 @@ public class mUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Nombre", "Apellido", "rol", "Creación", "Actualización"
+                "id", "Nombre", "Contraseña", "rol", "Creación", "Actualización"
             }
         ) {
             Class[] types = new Class [] {
@@ -278,7 +280,7 @@ public class mUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_modificarActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        // TODO add your handling code here:
+        buscarUsuario();
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
@@ -305,20 +307,19 @@ public class mUsuarios extends javax.swing.JFrame {
             new mUsuarios().setVisible(true);
         });
     }
-    
+
     public List<mUsuarios.Usuario> obtenerUsuarios() {
         List<mUsuarios.Usuario> usuarios = new ArrayList<>();
         String query = "SELECT * FROM Usuarios";
 
         try (
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+                Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 int id = rs.getInt("usuario_id");
                 String nombre = rs.getString("nombre_usuario");
                 String contrasena = rs.getString("contrasena");
-                boolean rol = rs.getBoolean("rol");
+                boolean rol = rs.getBoolean("admin");
                 String creadoEn = rs.getString("creado_en");
                 String actualizadoEn = rs.getString("actualizado_en");
                 mUsuarios.Usuario nuevo_usuario = new mUsuarios.Usuario(id, nombre, contrasena, rol, creadoEn, actualizadoEn);
@@ -330,41 +331,48 @@ public class mUsuarios extends javax.swing.JFrame {
         return usuarios;
     }
 
-    public void populateTable() {
-        tableModel = (DefaultTableModel) tbl_usuarios.getModel();
+    public void rellenarTabla() {
+        DefaultTableModel tableModel = new DefaultTableModel();
         List<mUsuarios.Usuario> usuarios = obtenerUsuarios();
         for (mUsuarios.Usuario usuario : usuarios) {
             tableModel.addRow(new Object[]{
                 usuario.getId(),
                 usuario.getNombre(),
                 usuario.getContrasena(),
-                usuario.isRol(),
+                usuario.isRol() ? "✔" : "❌",
                 usuario.getCreadoEn(),
                 usuario.getActualizadoEn()
             });
         }
+        tbl_usuarios.setModel(tableModel);
     }
+
     //Registrar usuarios
     /*
     private void registrarUsuario() {
         JOptionPane.showInputDialog("")
+    }*/
+    private void buscarUsuario() {
+        mBusqueda buscar = null;
+        try {
+            buscar = new mBusqueda(conn, "Usuarios");
+            buscar.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(mUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    private void eliminarUsuario() {
-        JOptionPane.showInputDialog("")
-    }
+    /*
     private void actualizarUsuario() {
         JOptionPane.showInputDialog("")
     }
-    */
-    private void eliminarUsuario(){
+     */
+    private void eliminarUsuario() {
         String id = (JOptionPane.showInputDialog("Ingrese id de usuario"));
         eliminarID(id);
     }
-    
-    
-    
+
     //BASE DE DATOS
-   private void eliminarID(String id){
+    private void eliminarID(String id) {
         PreparedStatement psmt = null;
         try {
             String sql = "DELETE FROM Usuarios WHERE usuario_id = ?";
@@ -374,8 +382,8 @@ public class mUsuarios extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-   }
-    
+    }
+
     // Variables declaration - do not modify                     
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration     
