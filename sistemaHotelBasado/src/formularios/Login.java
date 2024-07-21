@@ -2,26 +2,46 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui;
-import com.formdev.flatlaf.FlatLightLaf;
+package formularios;
+
 import java.awt.*;
 import javax.swing.*;
 //import gui.SQLConnection.*;
-import javax.swing.border.LineBorder;
-import sql.dbConnection;
 import java.sql.*;
+import sql.dbConnection;
 /**
  *
  * @author AKG
  */
 public class Login extends javax.swing.JFrame {
-
+    
+    private Connection conn = null;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
-        FlatLightLaf.setup();
+        getRootPane().setDefaultButton(entrar);
+        try {
+            UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
+            //UIManager.put( "Button.arc", 999 );
+            //UIManager.put( "Component.arc", 999 );
+            //UIManager.put( "ProgressBar.arc", 999 );
+            //UIManager.put( "TextComponent.arc", 999 );
+            UIManager.put("Button.arc", 1); // Radio de las esquinas redondeadas
+            UIManager.put("Button.borderColor", Color.BLACK); // Color del borde
+            UIManager.put("Button.focusedBorderColor", Color.BLACK); // Color del borde cuando está enfocado
+            UIManager.put("Button.default.borderColor", Color.BLACK); // Color del borde para el botón por defecto
+            UIManager.put("Component.borderWidth", 1);
+            
+            
+            //UIManager.put("Button.border", new LineBorder(Color.BLACK,2));
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+        
+        //Conexion
+        conn = dbConnection.connect();
     }
 
     /**
@@ -42,13 +62,12 @@ public class Login extends javax.swing.JFrame {
         fondo2 = new javax.swing.JButton();
         fondo4 = new javax.swing.JButton();
         entrar = new javax.swing.JButton();
-        fondo5 = new javax.swing.JButton();
-        contrasena = new javax.swing.JTextField();
         letras0 = new javax.swing.JLabel();
         letras1 = new javax.swing.JLabel();
         icono_hotel = new javax.swing.JLabel();
-        pruebas = new javax.swing.JTextField();
         usuario = new javax.swing.JTextField();
+        contrasena = new javax.swing.JPasswordField();
+        chk_Mostrar = new javax.swing.JCheckBox();
 
         jButton2.setBackground(new java.awt.Color(255, 204, 0));
         jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
@@ -56,7 +75,6 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -100,34 +118,22 @@ public class Login extends javax.swing.JFrame {
         entrar.setFont(entrar.getFont().deriveFont((entrar.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, entrar.getFont().getSize()+3));
         entrar.setText("Entrar");
         entrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        entrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         entrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 entrarActionPerformed(evt);
             }
         });
-        jPanel1.add(entrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 120, -1));
-
-        fondo5.setBackground(new java.awt.Color(255, 204, 0));
-        fondo5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jPanel1.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 120, 30));
-
-        contrasena.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        contrasena.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contrasenaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 160, 20));
+        jPanel1.add(entrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 120, -1));
 
         letras0.setText("Usuario:");
-        jPanel1.add(letras0, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
+        jPanel1.add(letras0, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, -1, -1));
 
         letras1.setText("Contraseña:");
-        jPanel1.add(letras1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, -1, -1));
+        jPanel1.add(letras1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, -1, -1));
 
         icono_hotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Untitled_logo_1_free-file.jpg"))); // NOI18N
-        jPanel1.add(icono_hotel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 170, 110));
-        jPanel1.add(pruebas, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, 160, -1));
+        jPanel1.add(icono_hotel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 170, 110));
 
         usuario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -135,12 +141,37 @@ public class Login extends javax.swing.JFrame {
                 usuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 160, 20));
+        jPanel1.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 160, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 360));
+        contrasena.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        contrasena.setEchoChar('*');
+        jPanel1.add(contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 160, -1));
+
+        chk_Mostrar.setBackground(new java.awt.Color(255, 255, 255));
+        chk_Mostrar.setText("Mostrar");
+        chk_Mostrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        chk_Mostrar.setContentAreaFilled(false);
+        chk_Mostrar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chk_MostrarStateChanged(evt);
+            }
+        });
+        jPanel1.add(chk_Mostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
 
     private void fondo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fondo1ActionPerformed
         // TODO add your handling code here:
@@ -156,35 +187,54 @@ public class Login extends javax.swing.JFrame {
 
     private void entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarActionPerformed
         // TODO add your handling code here:
-        
-        String contrasenal = contrasena.getText();
+        char[] contra = contrasena.getPassword();
+        String contrasenal = new String(contra);
         String usuariol = usuario.getText();
-        
-        this.pruebas.setText(contrasenal);
-        
-        System.out.println(validarUsuario(usuariol,contrasenal));
-        
-    }//GEN-LAST:event_entrarActionPerformed
+        //Aqui el valor de loginRolles:
+        // TRUE -> Usuario valido y es admin
+        // FALSE -> Usuario valido y es empleado
 
-    private void contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contrasenaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_contrasenaActionPerformed
+        if (validarUsuario(usuariol, contrasenal, conn)) {
+            boolean loginRol = verificarRol(usuariol, conn);
+            //AQUI SE INVOCA FORMULARIOS
+            //TESTING (ELIMINAR AL FINAL
+            
+            //Selector modulo
+            // ADMIN -> TRUE
+            // Empleado -> False
+            abrirSelectorModulo(loginRol);
+        }else{
+            System.out.println("Inaccesible");
+            JOptionPane.showMessageDialog(rootPane, "Usuario o contraseña no validos");
+        };
+        
+
+        //
+
+    }//GEN-LAST:event_entrarActionPerformed
 
     private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usuarioActionPerformed
 
+    private void chk_MostrarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chk_MostrarStateChanged
+        if(this.chk_Mostrar.isSelected()){
+            this.contrasena.setEchoChar((char) 0);
+        }else{
+            this.contrasena.setEchoChar('*');
+        };
+    }//GEN-LAST:event_chk_MostrarStateChanged
+
     /**
-     * @param args the command line arguments
+     * @param nombreUsuario
+     * @param contrasena
+     * @param conn
+     * @return 
      */
-    
-        
-public static boolean validarUsuario(String nombreUsuario,String contrasena) {
-        Connection conn = null;
+    public static boolean validarUsuario(String nombreUsuario, String contrasena, Connection conn) {
         PreparedStatement psmt = null;
         ResultSet rs = null;
         try {
-            conn = dbConnection.connect();
             String sql = "SELECT contrasena FROM usuarios WHERE nombre_usuario = ?";
             psmt = conn.prepareStatement(sql);
             psmt.setString(1, nombreUsuario);
@@ -193,6 +243,7 @@ public static boolean validarUsuario(String nombreUsuario,String contrasena) {
             if (rs.next()) {
                 String contrasenaBD = rs.getString("contrasena");
                 return contrasena.equals(contrasenaBD);
+
             } else {
                 return false; // Usuario no encontrado
             }
@@ -207,64 +258,117 @@ public static boolean validarUsuario(String nombreUsuario,String contrasena) {
                 if (psmt != null) {
                     psmt.close();
                 }
-                if (conn != null) {
-                    conn.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    ;
+    
+    public void abrirSelectorModulo(boolean admin){
+        mSelectorModulos usuarios = new mSelectorModulos();
+        //MODO EMPLEADO OCULTA LOS MODULOS QUE NO SEAN HECHOS PARA EMPLEADOS
+        if (!admin){
+            usuarios.desabilitarModulos();
+        }
+        usuarios.setVisible(true);
+        this.cerrarLogin();
+    };
+    public static boolean verificarRol(String nombreUsuario, Connection conn) {
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT rol FROM Usuarios WHERE nombre_usuario = ? AND rol = 1";
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, nombreUsuario);
+            rs = psmt.executeQuery();
+
+            if (rs.next()) {
+                String rol = rs.getString("rol");
+                return (rol.equals("1"));
+            } else {
+                return false; // Usuario no encontrado
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (psmt != null) {
+                    psmt.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
         }
-}   
-    
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
         try {
             UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
             //UIManager.put( "Button.arc", 999 );
             //UIManager.put( "Component.arc", 999 );
             //UIManager.put( "ProgressBar.arc", 999 );
             //UIManager.put( "TextComponent.arc", 999 );
-            UIManager.put("Button.arc", 5); // Radio de las esquinas redondeadas
+            UIManager.put("Button.arc", 2); // Radio de las esquinas redondeadas
             UIManager.put("Button.borderColor", Color.BLACK); // Color del borde
             UIManager.put("Button.focusedBorderColor", Color.BLACK); // Color del borde cuando está enfocado
             UIManager.put("Button.default.borderColor", Color.BLACK); // Color del borde para el botón por defecto
-            UIManager.put("Component.borderWidth", 5);
-            
-            
+            UIManager.put("Component.borderWidth", 2);
+
             //UIManager.put("Button.border", new LineBorder(Color.BLACK,2));
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Login().setVisible(true);
             }
+            
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField contrasena;
+    private javax.swing.JCheckBox chk_Mostrar;
+    private javax.swing.JPasswordField contrasena;
     private javax.swing.JButton entrar;
     private javax.swing.JButton fondo0;
     private javax.swing.JButton fondo1;
     private javax.swing.JButton fondo2;
     private javax.swing.JButton fondo4;
-    private javax.swing.JButton fondo5;
     private javax.swing.JLabel fondoimagen;
     private javax.swing.JLabel icono_hotel;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel letras0;
     private javax.swing.JLabel letras1;
-    private javax.swing.JTextField pruebas;
     private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
+
+    //FUNCION PARA CERRAR BASE DE DATOS
+    public void cerrarLogin() {
+        super.dispose();
+    }
+    public void cerrarBD(){
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    
 }
