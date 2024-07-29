@@ -6,26 +6,26 @@
 1. **Login**
 
 2. **Modulo Selector Empleado**
-   - **mHabitaciones** (juancitux)
+   - **mHabitaciones** (Walter)
       - RU
-   - **mReservas**
+   - **mReservas** (...)
       - CRUD 
-   - **mClientes**
+   - **mClientes** (Walter)
       - CRUD
-   - **mPagos**
+   - **mPagos**   (...)
       - CRUD
    - ****
 
 3. **Modulo Selector Admin**
-   - **mHabitaciones** (juancitux)
+   - **mHabitaciones** (Walter)
       - CRUD
-   - **mReservas**
+   - **mReservas** (...)
       - CRUD
-   - **mClientes**
+   - **mClientes** (Walter)
       - CRUD
-   - **mPagos**
+   - **mPagos**   (...)
       - CRUD
-   - **mUsuarios**
+   - **mUsuarios** (Juan)
       - CRUD
-   - **mEmpleados**
+   - **mEmpleados** (Juan)
       - CRUD
