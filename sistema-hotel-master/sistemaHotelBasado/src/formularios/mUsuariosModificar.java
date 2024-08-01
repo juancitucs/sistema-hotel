@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javax.management.Query.and;
 import sql.dbConnection;
 
 /**
@@ -54,29 +55,34 @@ public class mUsuariosModificar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
         getContentPane().add(tf_nombre);
-        tf_nombre.setBounds(10, 100, 64, 22);
+        tf_nombre.setBounds(10, 100, 64, 25);
 
         jLabel2.setText("Nombre");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(10, 80, 44, 16);
+        jLabel2.setBounds(10, 80, 52, 19);
 
+        tf_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_idActionPerformed(evt);
+            }
+        });
         tf_id.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_idKeyReleased(evt);
             }
         });
         getContentPane().add(tf_id);
-        tf_id.setBounds(40, 40, 64, 22);
+        tf_id.setBounds(40, 40, 64, 25);
         getContentPane().add(tf_contra);
-        tf_contra.setBounds(100, 100, 64, 22);
+        tf_contra.setBounds(100, 100, 64, 25);
 
         jLabel3.setText("Contraseña");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(100, 80, 59, 16);
+        jLabel3.setBounds(100, 80, 73, 19);
 
         jLabel4.setText("Rol");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(190, 80, 17, 16);
+        jLabel4.setBounds(190, 80, 19, 19);
 
         chk_admin.setText("Admin");
         chk_admin.addActionListener(new java.awt.event.ActionListener() {
@@ -85,7 +91,7 @@ public class mUsuariosModificar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(chk_admin);
-        chk_admin.setBounds(190, 100, 58, 20);
+        chk_admin.setBounds(190, 100, 63, 23);
 
         btn_aplicar.setText("Aplicar");
         btn_aplicar.addActionListener(new java.awt.event.ActionListener() {
@@ -94,26 +100,36 @@ public class mUsuariosModificar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_aplicar);
-        btn_aplicar.setBounds(280, 150, 72, 23);
+        btn_aplicar.setBounds(280, 150, 73, 25);
 
         jLabel5.setText("ID");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(10, 40, 20, 16);
+        jLabel5.setBounds(10, 40, 20, 19);
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Modificar existente");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jRadioButton1);
-        jRadioButton1.setBounds(140, 10, 160, 21);
+        jRadioButton1.setBounds(140, 10, 160, 23);
 
         buttonGroup1.add(chk_new);
         chk_new.setText("Crear Usuario");
+        chk_new.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chk_newStateChanged(evt);
+            }
+        });
         chk_new.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chk_newActionPerformed(evt);
             }
         });
         getContentPane().add(chk_new);
-        chk_new.setBounds(10, 10, 94, 21);
+        chk_new.setBounds(10, 10, 111, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -128,19 +144,58 @@ public class mUsuariosModificar extends javax.swing.JFrame {
             
             añadirUsuario(conn);
         } else {
-            modificarUsuario(conn);
+            if(this.tf_nombre.getText().equals("---") || this.tf_contra.getText().equals("---")){
+                JOptionPane.showMessageDialog(rootPane, "El usuario no existe");
+            }else{
+                modificarUsuario(conn);
+            }
         }
 
     }//GEN-LAST:event_btn_aplicarActionPerformed
 
     private void tf_idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_idKeyReleased
+        if (!this.chk_new.isSelected() && !this.jRadioButton1.isSelected()){
+            this.jRadioButton1.setSelected(true);
+        }
+        
+        
         String id = this.tf_id.getText();
         buscarID(conn, id);
     }//GEN-LAST:event_tf_idKeyReleased
 
     private void chk_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_newActionPerformed
-        // TODO add your handling code here:
+        if (this.chk_new.isSelected()){
+            try {
+                this.tf_id.setText(String.valueOf(ultimoIdDisponible(conn)));
+                this.tf_id.setEnabled(false);
+            } catch (SQLException ex) {
+                Logger.getLogger(mUsuariosModificar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            String id = this.tf_id.getText();
+            this.buscarID(conn, id);
+        }
+        
     }//GEN-LAST:event_chk_newActionPerformed
+
+    private void chk_newStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chk_newStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_newStateChanged
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        this.tf_id.setEnabled(true);
+        String id = this.tf_id.getText();
+        if (!this.chk_new.isSelected()) {
+            this.buscarID(conn, id);
+        }else{
+            this.tf_id.setText(String.valueOf(ultimoIdDisponible(conn)));
+            this.tf_id.setEnabled(false);
+        }
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void tf_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_idActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,10 +261,10 @@ public class mUsuariosModificar extends javax.swing.JFrame {
                     this.tf_nombre.setText(nombre);
                     this.tf_contra.setText(contraseña);
                     this.chk_admin.setSelected(esAdmin);
-                    this.lbl_encontrado.setText("Usuario existente, aplicar para modificar");
+                    //this.lbl_encontrado.setText("Usuario existente, aplicar para modificar");
                 } else {
                     System.out.println("Usuario no encontrado");
-                    this.lbl_encontrado.setText("Usuario no encontrado");
+                    //this.lbl_encontrado.setText("Usuario no encontrado");
                     this.tf_nombre.setText("---");
                     this.tf_contra.setText("---");
                     this.chk_admin.setSelected(false);
@@ -269,7 +324,38 @@ public class mUsuariosModificar extends javax.swing.JFrame {
     }
 
     private void modificarUsuario(Connection conn) {
-        String query = "";
+        String insertQuery = "UPDATE Usuarios SET nombre_usuario = ?, contrasena = ?, admin = ?, actualizado_en = CURRENT_TIMESTAMP where usuario_id = ?";
+
+        try {
+            // Obtener el último ID
+
+            // Obtener los valores para el nuevo usuario
+            String nombre = this.tf_nombre.getText();
+            String contraseña = this.tf_contra.getText();
+            boolean esAdmin = this.chk_admin.isSelected();
+
+            // Insertar el nuevo usuario
+            String ID = this.tf_id.getText();
+            
+            PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
+            insertStmt.setString(1, nombre);
+            insertStmt.setString(2, contraseña);
+            insertStmt.setBoolean(3, esAdmin);
+            insertStmt.setString(4, ID);
+
+            int filasInsertadas = insertStmt.executeUpdate();
+            if (filasInsertadas > 0) {
+                JOptionPane.showMessageDialog(rootPane, "Usuario actualizado correctamente");
+            }
+            this.chk_new.setSelected(false);
+            this.chk_admin.setSelected(false);
+            this.tf_contra.setText("");
+            this.tf_nombre.setText("");
+            this.tf_id.setText("");
+            insertStmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 }
