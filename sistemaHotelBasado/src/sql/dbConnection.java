@@ -39,6 +39,7 @@ public class dbConnection {
             System.out.println("Error: No se pudo conectar a la base de datos.");
             e.printStackTrace();
         }
+        System.out.println(".");
         return con;
     }
 }

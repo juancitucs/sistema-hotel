@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/QueryExecutor.java</file>
+            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/formularios/mUsuarios.java</file>
+            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/formularios/mEmpleados.java</file>
+            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/formularios/mBusqueda.java</file>
+            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/formularios/mHabitaciones.java</file>
+            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/formularios/mSelectorModulos.java</file>
+            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/formularios/mClientes.java</file>
+            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/formularios/mLogin.java</file>
+            <file>file:/home/jtx/Documents/sistema-hotel/sistemaHotelBasado/src/formularios/mUsuariosModificar.java</file>
         </group>
     </open-files>
 </project-private>
