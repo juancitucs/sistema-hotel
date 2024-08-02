@@ -257,16 +257,29 @@ public class mUsuariosModificar extends javax.swing.JFrame {
                 if (resultSet.next()) {
                     String nombre = resultSet.getString("nombre_usuario");
                     String contraseña = resultSet.getString("contrasena");
+                    
+                    this.btn_aplicar.setEnabled(true);
+                    //this.lbl_encontrado.setText("Usuario no encontrado");
+                    this.tf_nombre.setEnabled(true);
+                    this.tf_contra.setEnabled(true);
+                    this.chk_admin.setEnabled(true);
+                    
+                    
                     boolean esAdmin = resultSet.getBoolean("admin");
                     this.tf_nombre.setText(nombre);
                     this.tf_contra.setText(contraseña);
                     this.chk_admin.setSelected(esAdmin);
                     //this.lbl_encontrado.setText("Usuario existente, aplicar para modificar");
+                    
                 } else {
-                    System.out.println("Usuario no encontrado");
+                    this.btn_aplicar.setEnabled(false);
                     //this.lbl_encontrado.setText("Usuario no encontrado");
-                    this.tf_nombre.setText("---");
-                    this.tf_contra.setText("---");
+                    this.tf_nombre.setEnabled(false);
+                    this.tf_contra.setEnabled(false);
+                    this.chk_admin.setEnabled(false);
+                    
+                    this.tf_nombre.setText("");
+                    this.tf_contra.setText("");
                     this.chk_admin.setSelected(false);
                 }
             }

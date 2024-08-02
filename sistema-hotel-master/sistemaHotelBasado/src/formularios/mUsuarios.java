@@ -98,14 +98,12 @@ public class mUsuarios extends javax.swing.JFrame {
         tbl_usuarios = new javax.swing.JTable();
         btn_back = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        btn_registrar = new javax.swing.JButton();
         btn_eliminar1 = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
         btn_modificar1 = new javax.swing.JButton();
         btn_modificar = new javax.swing.JButton();
         btn_buscar1 = new javax.swing.JButton();
         btn_buscar = new javax.swing.JButton();
-        btn_registrar2 = new javax.swing.JButton();
         letras17 = new javax.swing.JLabel();
         btn_registrar1 = new javax.swing.JButton();
 
@@ -162,23 +160,11 @@ public class mUsuarios extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_registrar.setFont(btn_registrar.getFont().deriveFont((btn_registrar.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, btn_registrar.getFont().getSize()+3));
-        btn_registrar.setText("Registrar");
-        btn_registrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        btn_registrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn_registrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_registrarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 30));
-
         btn_eliminar1.setBackground(new java.awt.Color(255, 204, 0));
         btn_eliminar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         btn_eliminar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_eliminar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(btn_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 20, 30));
+        jPanel1.add(btn_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 20, 30));
 
         btn_eliminar.setFont(btn_eliminar.getFont().deriveFont((btn_eliminar.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, btn_eliminar.getFont().getSize()+3));
         btn_eliminar.setText("Eliminar");
@@ -190,16 +176,16 @@ public class mUsuarios extends javax.swing.JFrame {
                 btn_eliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 110, 30));
+        jPanel1.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 110, 30));
 
         btn_modificar1.setBackground(new java.awt.Color(255, 204, 0));
         btn_modificar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         btn_modificar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_modificar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(btn_modificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 20, 30));
+        jPanel1.add(btn_modificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 20, 30));
 
         btn_modificar.setFont(btn_modificar.getFont().deriveFont((btn_modificar.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, btn_modificar.getFont().getSize()+3));
-        btn_modificar.setText("Modificar");
+        btn_modificar.setText("Añadir / Modificar");
         btn_modificar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         btn_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -208,7 +194,7 @@ public class mUsuarios extends javax.swing.JFrame {
                 btn_modificarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 110, 30));
+        jPanel1.add(btn_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 180, 30));
 
         btn_buscar1.setBackground(new java.awt.Color(255, 204, 0));
         btn_buscar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
@@ -228,12 +214,6 @@ public class mUsuarios extends javax.swing.JFrame {
         });
         jPanel1.add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, 110, 30));
 
-        btn_registrar2.setBackground(new java.awt.Color(255, 204, 0));
-        btn_registrar2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        btn_registrar2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn_registrar2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(btn_registrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 20, 30));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 282, 526, -1));
 
         letras17.setFont(letras17.getFont().deriveFont(letras17.getFont().getStyle() | java.awt.Font.BOLD, 26));
@@ -248,10 +228,6 @@ public class mUsuarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        //registrarUsuario();
-    }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         eliminarUsuario();
@@ -379,9 +355,7 @@ public class mUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton btn_eliminar1;
     private javax.swing.JButton btn_modificar;
     private javax.swing.JButton btn_modificar1;
-    private javax.swing.JButton btn_registrar;
     private javax.swing.JButton btn_registrar1;
-    private javax.swing.JButton btn_registrar2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel letras17;
