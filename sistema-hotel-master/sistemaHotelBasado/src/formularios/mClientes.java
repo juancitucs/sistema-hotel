@@ -17,7 +17,7 @@ import sql.dbConnection;
  *
  * @author USER
  */
-public class mClientes extends javax.swing.JFrame {
+public final class mClientes extends javax.swing.JFrame {
     
     Connection cn;
     Statement st;
@@ -29,7 +29,7 @@ public class mClientes extends javax.swing.JFrame {
     public mClientes() {
         initComponents();
         setLocationRelativeTo(null);
-        listar();
+        listar(); 
         conn = dbConnection.connect();
         }
 
@@ -71,6 +71,7 @@ public class mClientes extends javax.swing.JFrame {
         limpiarbt = new javax.swing.JButton();
         eliminarbt = new javax.swing.JButton();
         buscarbt = new javax.swing.JButton();
+        fechatxt = new com.toedter.calendar.JDateChooser();
         btn_mHabitaciones7 = new javax.swing.JButton();
         btn_mHabitaciones8 = new javax.swing.JButton();
 
@@ -238,6 +239,7 @@ public class mClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(buscarbt, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 100, 20));
+        jPanel1.add(fechatxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, -1));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 780, 210));
 
@@ -337,7 +339,7 @@ void editar(){
         String fecha=((JTextField)fechatxt.getDateEditor().getUiComponent()).getText();
         int fila=tabla.getSelectedRow();
         int id=(int) tabla.getValueAt(fila,0);
-        String sql="update clientes set nombre='"+nombres+"',apellido='"+apellidos+"',fecha_nacimiento='"+fecha+"',correo_electronico='"+correo+"',telefono='"+nro+"',direccion='"+direccion+"',nacionalidad='"+nacionalidad+"' where cliente_id="+id;
+        String sql="update Clientes set nombre='"+nombres+"',apellido='"+apellidos+"',fecha_nacimiento='"+fecha+"',correo_electronico='"+correo+"',telefono='"+nro+"',direccion='"+direccion+"',nacionalidad='"+nacionalidad+"' where cliente_id="+id;
         if(nro.equals("")||nombres.equals("")||apellidos.equals("")||fecha.equals("")||correo.equals("")||direccion.equals("")||nacionalidad.equals("")){
             JOptionPane.showMessageDialog(null, "Debe ingresar datos en las cajas.");
             }else{
@@ -430,6 +432,7 @@ void listar(){
     private javax.swing.JTextField direcciontxt;
     private javax.swing.JButton editarbt;
     private javax.swing.JButton eliminarbt;
+    private com.toedter.calendar.JDateChooser fechatxt;
     private javax.swing.JButton fondo;
     private javax.swing.JButton fondo1;
     private javax.swing.JButton fondo2;

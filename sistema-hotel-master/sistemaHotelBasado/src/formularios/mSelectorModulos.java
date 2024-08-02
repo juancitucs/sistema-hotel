@@ -96,6 +96,11 @@ public class mSelectorModulos extends javax.swing.JFrame {
         btn_mReservas.setFont(btn_mReservas.getFont().deriveFont((btn_mReservas.getFont().getStyle() & ~java.awt.Font.ITALIC) | java.awt.Font.BOLD, btn_mReservas.getFont().getSize()+3));
         btn_mReservas.setText("Reservas");
         btn_mReservas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_mReservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_mReservasActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_mReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 140, 30));
 
         btn_mUsuarios1.setBackground(new java.awt.Color(255, 204, 0));
@@ -177,6 +182,10 @@ public class mSelectorModulos extends javax.swing.JFrame {
     private void btn_mUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mUsuariosActionPerformed
         abrirUsuarios();
     }//GEN-LAST:event_btn_mUsuariosActionPerformed
+
+    private void btn_mReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mReservasActionPerformed
+        abrirReservas();
+    }//GEN-LAST:event_btn_mReservasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,6 +273,11 @@ public class mSelectorModulos extends javax.swing.JFrame {
         modulo.setVisible(true);
         this.setVisible(false);
     }
-    }
-
+    
+    private void abrirReservas() {
+        mReservas modulo = new mReservas();
+        modulo.setVisible(true);
+        this.setVisible(false);
+    } 
+    
 }
