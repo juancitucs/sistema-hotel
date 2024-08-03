@@ -5,6 +5,8 @@
 package formularios;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sql.dbConnection;
@@ -36,7 +38,6 @@ public class H_empleados extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         editarbtn = new javax.swing.JButton();
-        buscarbtn = new javax.swing.JButton();
         nuevobtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -56,6 +57,7 @@ public class H_empleados extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         descripciontxt = new javax.swing.JTextArea();
+        buscarbtn1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 204, 255));
@@ -72,14 +74,6 @@ public class H_empleados extends javax.swing.JFrame {
             }
         });
         jPanel3.add(editarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 150, 30));
-
-        buscarbtn.setText("BUSCAR");
-        buscarbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarbtnActionPerformed(evt);
-            }
-        });
-        jPanel3.add(buscarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 150, 30));
 
         nuevobtn.setText("LIMPIAR");
         nuevobtn.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +192,14 @@ public class H_empleados extends javax.swing.JFrame {
 
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 370, 310));
 
+        buscarbtn1.setText("BUSCAR");
+        buscarbtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarbtn1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(buscarbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 150, 30));
+
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 520));
 
         pack();
@@ -210,27 +212,22 @@ public class H_empleados extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_editarbtnActionPerformed
 
-    private void buscarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarbtnActionPerformed
-        nuevo();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buscarbtnActionPerformed
-
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
         int fila=tabla.getSelectedRow();
         if(fila==-1){}
         else{
-            String estado=(String)tabla.getValueAt(fila,5);
-            estadocb.setSelectedItem(estado);
-            String tipo=(String)tabla.getValueAt(fila,3);
-            tipocb.setSelectedItem(tipo);
-            String nro=(String)tabla.getValueAt(fila,1);
-            nrotxt.setText(nro);
             String id=(String)tabla.getValueAt(fila,0);
             idtxt.setText(id);
+            String nro=(String)tabla.getValueAt(fila,1);
+            nrotxt.setText(nro);
             String piso=(String)tabla.getValueAt(fila,2);
             pisotxt.setText(piso);
+            String tipo=(String)tabla.getValueAt(fila,3);
+            tipocb.setSelectedItem(tipo);
             String precio=(String)tabla.getValueAt(fila,4);
             preciotxt.setText(precio);
+            String estado=(String)tabla.getValueAt(fila,5);
+            estadocb.setSelectedItem(estado);
             String descripcion=(String)tabla.getValueAt(fila,6);
             descripciontxt.setText(descripcion);
 
@@ -275,6 +272,11 @@ public class H_empleados extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nuevobtnActionPerformed
 
+    private void buscarbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarbtn1ActionPerformed
+        // TODO add your handling code here:
+        buscarHabitacion();
+    }//GEN-LAST:event_buscarbtn1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -310,7 +312,7 @@ public class H_empleados extends javax.swing.JFrame {
         });
     }
     void listar(){
-        String sql="select * from habitaciones";
+        String sql="select * from Habitaciones";
         try {
             cn = dbConnection.connect();
             st=cn.createStatement();
@@ -361,11 +363,19 @@ public class H_empleados extends javax.swing.JFrame {
             }catch(Exception e){}
         }
     }
-  
+    private void buscarHabitacion() {
+            mBusqueda buscar = null;
+            try {
+                buscar = new mBusqueda(conn, "Habitaciones");
+                buscar.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(mUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buscarbtn;
+    private javax.swing.JButton buscarbtn1;
     private javax.swing.JTextArea descripciontxt;
     private javax.swing.JButton editarbtn;
     private javax.swing.JComboBox<String> estadocb;

@@ -5,6 +5,8 @@
 package formularios;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import sql.dbConnection;
 
@@ -81,14 +83,14 @@ public class H_clientes extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -116,7 +118,7 @@ public class H_clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        buscarHabitacion();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -181,6 +183,16 @@ void limpiartabla(){
             i=i-1;
         }
     }
+
+    private void buscarHabitacion() {
+            mBusqueda buscar = null;
+            try {
+                buscar = new mBusqueda(conn, "Habitaciones");
+                buscar.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(mUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
      
 

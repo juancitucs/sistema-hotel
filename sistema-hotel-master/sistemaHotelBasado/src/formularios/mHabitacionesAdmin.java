@@ -6,6 +6,8 @@ package formularios;
 
 //import configuracion.Conexion;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sql.dbConnection;
@@ -183,11 +185,11 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 207, 258, 396));
@@ -242,25 +244,22 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
 
     private void registrarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarbtnActionPerformed
     registrar();
-    listar();
-    nuevo();
     }//GEN-LAST:event_registrarbtnActionPerformed
 
     private void eliminarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarbtnActionPerformed
-    eliminar();
-    listar();
+    eliminarHabitacion();
     nuevo();
     }//GEN-LAST:event_eliminarbtnActionPerformed
 
     private void editarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarbtnActionPerformed
     editar();
-    listar();
-    nuevo();
+    
 // TODO add your handling code here:
     }//GEN-LAST:event_editarbtnActionPerformed
 
     private void buscarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarbtnActionPerformed
-    nuevo();
+    buscarHabitacion();
+    
         // TODO add your handling code here:
     }//GEN-LAST:event_buscarbtnActionPerformed
 
@@ -414,7 +413,8 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
                 st.executeUpdate(sql);
                 limpiartabla();
             }catch(Exception e){}
-
+               listar();
+               nuevo();
         }
     }
     void limpiartabla(){
@@ -438,22 +438,11 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
                     st.executeUpdate(sql);
                     limpiartabla();
                 }catch(Exception e){}
+                listar();
+                nuevo();
             }
         }
-    void eliminar(){
-        int fila=tabla.getSelectedRow();
-        if(fila==-1){
-        }else{
-            String nro=nrotxt.getText();
-            String sql="delete from Habitaciones where numero_habitacion="+nro;
-            try{
-                cn=con.getConnection();
-                st=cn.createStatement();
-                st.executeUpdate(sql);
-                limpiartabla();
-            }catch(Exception e){}
-        }
-    }
+    
     void nuevo(){
         idtxt.setText("");
         nrotxt.setText("");
@@ -461,6 +450,36 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
         pisotxt.setText("");
         descripciontxt.setText("");
     }
+    
+    void eliminarHabitacion() {
+        String id = (JOptionPane.showInputDialog("Ingrese id de habitacion"));
+        eliminarID(id);
+        //this.tbl_usuarios.removeAll();
+    }
+    
+    private void eliminarID(String id) {
+        PreparedStatement psmt = null;
+        try {
+            String sql = "DELETE FROM Habitaciones WHERE habitacion_id= ?";
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, id);
+            psmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+    }
+    private void buscarHabitacion() {
+            mBusqueda buscar = null;
+            try {
+                buscar = new mBusqueda(conn, "Habitaciones");
+                buscar.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(mUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        }
  
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -492,3 +511,4 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> tipocb;
     // End of variables declaration//GEN-END:variables
    }
+

@@ -4,6 +4,9 @@
  */
 package formularios;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,12 +15,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author jtx
  */
 public class mBusqueda extends javax.swing.JFrame {
     
+    
+    
+    public String idSeleccionado = "";
     private ArrayList<String> columnas;
     private Connection conn;
     private String tableName;
@@ -41,6 +48,7 @@ public class mBusqueda extends javax.swing.JFrame {
             this.cbox_column.addItem(columnas.get(i));
         };
         llenarTabla(this.conn, this.tableName,this.tf_barraBusqueda.getText());
+        this.btn_seleccionar.setEnabled(false);
     }
 
     /**
@@ -56,13 +64,12 @@ public class mBusqueda extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_filter = new javax.swing.JTable();
         cbox_column = new javax.swing.JComboBox<>();
-        buscar = new javax.swing.JButton();
+        btn_seleccionar = new javax.swing.JButton();
         tf_barraBusqueda = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_back = new javax.swing.JButton();
         btn_registrar1 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         txts = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,9 +102,14 @@ public class mBusqueda extends javax.swing.JFrame {
         });
         jPanel1.add(cbox_column, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 20));
 
-        buscar.setText("buscar");
-        buscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jPanel1.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, 60, -1));
+        btn_seleccionar.setText("buscar");
+        btn_seleccionar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        btn_seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_seleccionarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, 60, -1));
 
         tf_barraBusqueda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         tf_barraBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -139,9 +151,6 @@ public class mBusqueda extends javax.swing.JFrame {
         });
         jPanel1.add(btn_registrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 20, 30));
 
-        jButton1.setText("jButton1");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, -1, -1));
-
         txts.setBackground(new java.awt.Color(255, 255, 255));
         txts.setForeground(new java.awt.Color(255, 255, 255));
         txts.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -161,7 +170,12 @@ public class mBusqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_barraBusquedaKeyPressed
 
     private void tf_barraBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_barraBusquedaKeyReleased
-        // TODO add your handling code here:
+        String buscador = this.tf_barraBusqueda.getText();
+        try {
+            llenarTabla(conn,tableName,buscador);
+        } catch (SQLException ex) {
+            Logger.getLogger(mBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_tf_barraBusquedaKeyReleased
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
@@ -173,6 +187,11 @@ public class mBusqueda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_registrar1ActionPerformed
 
+    private void btn_seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_seleccionarActionPerformed
+        obtenerIDSeleccion();
+        
+    }//GEN-LAST:event_btn_seleccionarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -180,9 +199,8 @@ public class mBusqueda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_registrar1;
-    private javax.swing.JButton buscar;
+    private javax.swing.JButton btn_seleccionar;
     private javax.swing.JComboBox<String> cbox_column;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -240,6 +258,27 @@ public class mBusqueda extends javax.swing.JFrame {
         // Create the table model and table
         DefaultTableModel model = new DefaultTableModel(tableData, columns);
         this.tbl_filter.setModel(model);
+    }
+    
+        public void modoSeleccion() {
+        this.btn_seleccionar.setEnabled(false);
+    }
+
+    public void obtenerIDSeleccion() {
+        int selectedRow = tbl_filter.getSelectedRow();
+        if (selectedRow != -1) {
+            idSeleccionado = (String) tbl_filter.getValueAt(selectedRow, 0);
+            System.out.println(idSeleccionado);
+
+            this.dispose();
+            StringSelection stringSelection = new StringSelection(idSeleccionado);
+
+            // Obtener el portapapeles del sistema
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            // Copiar el texto al portapapeles
+            clipboard.setContents(stringSelection, null);
+            JOptionPane.showMessageDialog(rootPane,"Texto copiado al portapapeles: " + idSeleccionado);
+        };
     }
     
 }
