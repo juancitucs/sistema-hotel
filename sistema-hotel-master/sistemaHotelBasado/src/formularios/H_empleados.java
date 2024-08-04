@@ -58,6 +58,9 @@ public class H_empleados extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         descripciontxt = new javax.swing.JTextArea();
         buscarbtn1 = new javax.swing.JButton();
+        btn_vista = new javax.swing.JButton();
+        btn_registrar1 = new javax.swing.JButton();
+        btn_back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 204, 255));
@@ -73,7 +76,7 @@ public class H_empleados extends javax.swing.JFrame {
                 editarbtnActionPerformed(evt);
             }
         });
-        jPanel3.add(editarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 150, 30));
+        jPanel3.add(editarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 150, 30));
 
         nuevobtn.setText("LIMPIAR");
         nuevobtn.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +84,7 @@ public class H_empleados extends javax.swing.JFrame {
                 nuevobtnActionPerformed(evt);
             }
         });
-        jPanel3.add(nuevobtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 150, 30));
+        jPanel3.add(nuevobtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 150, 30));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("DATOS"));
@@ -90,7 +93,7 @@ public class H_empleados extends javax.swing.JFrame {
         jLabel1.setText("ID:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 18, 19, 25));
 
-        tipocb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Familiar", "Matrimonial", "Suit", "Gran Suit" }));
+        tipocb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Familiar", "Matrimonial", "Suite", "Gran Suite" }));
         tipocb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tipocbActionPerformed(evt);
@@ -113,6 +116,7 @@ public class H_empleados extends javax.swing.JFrame {
         });
         jPanel1.add(idtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 18, 70, 25));
 
+        nrotxt.setEditable(false);
         nrotxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nrotxtActionPerformed(evt);
@@ -123,6 +127,7 @@ public class H_empleados extends javax.swing.JFrame {
         jLabel2.setText("Piso:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 18, 32, 25));
 
+        pisotxt.setEditable(false);
         pisotxt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 pisotxtMouseExited(evt);
@@ -161,7 +166,7 @@ public class H_empleados extends javax.swing.JFrame {
         });
         jPanel1.add(preciotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 111, 94, 25));
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 340, 150));
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 340, 150));
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -178,7 +183,7 @@ public class H_empleados extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabla);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 425, 300));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 425, 300));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Descripcion:"));
@@ -198,7 +203,37 @@ public class H_empleados extends javax.swing.JFrame {
                 buscarbtn1ActionPerformed(evt);
             }
         });
-        jPanel3.add(buscarbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 150, 30));
+        jPanel3.add(buscarbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 150, 30));
+
+        btn_vista.setText("VISTA");
+        btn_vista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_vistaActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_vista, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 130, -1, -1));
+
+        btn_registrar1.setBackground(new java.awt.Color(255, 204, 0));
+        btn_registrar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_registrar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_registrar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_registrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrar1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_registrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 20, 30));
+
+        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/formularios/devolver.png"))); // NOI18N
+        btn_back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_back.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_back.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 30, 30));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 520));
 
@@ -207,8 +242,6 @@ public class H_empleados extends javax.swing.JFrame {
 
     private void editarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarbtnActionPerformed
         editar();
-        listar();
-        nuevo();
         // TODO add your handling code here:
     }//GEN-LAST:event_editarbtnActionPerformed
 
@@ -218,19 +251,18 @@ public class H_empleados extends javax.swing.JFrame {
         else{
             String id=(String)tabla.getValueAt(fila,0);
             idtxt.setText(id);
-            String nro=(String)tabla.getValueAt(fila,1);
-            nrotxt.setText(nro);
-            String piso=(String)tabla.getValueAt(fila,2);
-            pisotxt.setText(piso);
+            int nro=Integer.parseInt((String)tabla.getValueAt(fila,1).toString());
+            nrotxt.setText(""+nro);
+            int piso=Integer.parseInt((String)tabla.getValueAt(fila,2).toString());
+            pisotxt.setText(""+piso);
             String tipo=(String)tabla.getValueAt(fila,3);
             tipocb.setSelectedItem(tipo);
-            String precio=(String)tabla.getValueAt(fila,4);
-            preciotxt.setText(precio);
+            double precio=Double.parseDouble((String)tabla.getValueAt(fila,4).toString());
+            preciotxt.setText(""+precio);
             String estado=(String)tabla.getValueAt(fila,5);
             estadocb.setSelectedItem(estado);
             String descripcion=(String)tabla.getValueAt(fila,6);
             descripciontxt.setText(descripcion);
-
         }
     }//GEN-LAST:event_tablaMouseClicked
 
@@ -276,6 +308,18 @@ public class H_empleados extends javax.swing.JFrame {
         // TODO add your handling code here:
         buscarHabitacion();
     }//GEN-LAST:event_buscarbtn1ActionPerformed
+
+    private void btn_vistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vistaActionPerformed
+        abrirModuloVistaHabitacion();
+    }//GEN-LAST:event_btn_vistaActionPerformed
+
+    private void btn_registrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_registrar1ActionPerformed
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        retornarModulo();
+    }//GEN-LAST:event_btn_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,7 +375,6 @@ public class H_empleados extends javax.swing.JFrame {
                 }
             tabla.setModel(modelo);
             } catch(Exception e){}
-   
     }
     void limpiartabla(){
         for (int i=0;i<=tabla.getRowCount();i++){
@@ -347,20 +390,43 @@ public class H_empleados extends javax.swing.JFrame {
         descripciontxt.setText("");
     }
     void editar(){
+        int fila=tabla.getSelectedRow();
         String precio=preciotxt.getText();
+        String piso=pisotxt.getText();
+        String nro=nrotxt.getText();
         String estado=estadocb.getSelectedItem().toString();
         String descripcion=descripciontxt.getText();
-        String nro=nrotxt.getText();
-        String sql="update Habitaciones set precio_noche='"+precio+"',estado='"+estado+"',descripcion='"+descripcion+"' where numero_habitacion="+nro;
+        String tipo=tipocb.getSelectedItem().toString();
+        String t=null;
+        if(tipo.equals("Normal")){
+            t="N";
+        }
+        if(tipo.equals("Familiar")){
+            t="F";
+        }
+        if(tipo.equals("Matrimonial")){
+            t="M";
+        }
+        if(tipo.equals("Suite")){
+            t="S";
+        }
+        if(tipo.equals("Gran Suite")){
+            t="L";
+        }
+        String id="H"+nro+"P"+piso+t;
+        
+        String sql="update Habitaciones set precio_noche='"+precio+"',estado='"+estado+"',tipo_habitacion='"+tipo+"',habitacion_id='"+id+"',descripcion='"+descripcion+"' where numero_habitacion="+nro;
         if(precio.equals("")){
             JOptionPane.showMessageDialog(null, "Se requiere ingresar datos ");
         }else{
             try{
-                cn = dbConnection.connect();
+                cn=dbConnection.connect();
                 st=cn.createStatement();
                 st.executeUpdate(sql);
                 limpiartabla();
             }catch(Exception e){}
+            listar();
+            nuevo();
         }
     }
     private void buscarHabitacion() {
@@ -375,6 +441,9 @@ public class H_empleados extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_registrar1;
+    private javax.swing.JButton btn_vista;
     private javax.swing.JButton buscarbtn1;
     private javax.swing.JTextArea descripciontxt;
     private javax.swing.JButton editarbtn;
@@ -400,4 +469,12 @@ public class H_empleados extends javax.swing.JFrame {
     private javax.swing.JTable tabla;
     private javax.swing.JComboBox<String> tipocb;
     // End of variables declaration//GEN-END:variables
+
+    private void abrirModuloVistaHabitacion() {
+        new H_clientes().setVisible(true);
+    }
+
+    private void retornarModulo() {
+        this.dispose();
+    }
 }

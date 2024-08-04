@@ -4,6 +4,10 @@
  */
 package formularios;
 
+import com.toedter.calendar.JDateChooser;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.lang.System.Logger;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -12,6 +16,8 @@ import java.sql.Date;
 import java.util.logging.Level;
 import javax.swing.JTextField;
 import sql.dbConnection;
+import java.util.logging.Level;
+
 
 /**
  *
@@ -22,6 +28,7 @@ public class rPagos extends javax.swing.JFrame {
     /**
      * Creates new form rPagos
      */
+    public boolean modoDialogo = false;
     public rPagos() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -46,6 +53,10 @@ public class rPagos extends javax.swing.JFrame {
         fecha = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         monto1 = new javax.swing.JTextField();
+        textoaux = new javax.swing.JTextField();
+        btn_tablaBuscar = new javax.swing.JButton();
+        btn_registrar1 = new javax.swing.JButton();
+        btn_back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -79,6 +90,8 @@ public class rPagos extends javax.swing.JFrame {
         jPanel1.add(btn_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 100, 30));
 
         fecha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        fecha.setDateFormatString("dd/MM/yyyy");
+        fecha.setFocusable(false);
         jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 130, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -88,14 +101,91 @@ public class rPagos extends javax.swing.JFrame {
         monto1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         jPanel1.add(monto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 130, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 350));
+        textoaux.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoauxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(textoaux, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 0, 30));
+
+        btn_tablaBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        btn_tablaBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/OJO.jpeg"))); // NOI18N
+        btn_tablaBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn_tablaBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tablaBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_tablaBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 30, 30));
+
+        btn_registrar1.setBackground(new java.awt.Color(255, 204, 0));
+        btn_registrar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_registrar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_registrar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_registrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_registrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 20, 30));
+
+        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/formularios/devolver.png"))); // NOI18N
+        btn_back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_back.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_back.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 30, 30));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 290));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
-        realizarPago();
+        String datofecha = ((JTextField) fecha.getDateEditor().getUiComponent()).getText();
+        textoaux.setText(datofecha);
+        if (validarInput()) {
+
+            if (isFechaValida(this.fecha)) {
+                try {
+                    realizarPago();
+                } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(rPagos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Fecha invalida");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Monto invalido");
+        }
+
+
     }//GEN-LAST:event_btn_pagarActionPerformed
+
+    private void textoauxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoauxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoauxActionPerformed
+
+    private void btn_tablaBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tablaBuscarActionPerformed
+        try {
+            abrirFormularioBusqueda();
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(rPagos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_tablaBuscarActionPerformed
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        retornarModulo();
+    }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_registrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_registrar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,6 +217,7 @@ public class rPagos extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new rPagos().setVisible(true);
             }
@@ -134,7 +225,10 @@ public class rPagos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_pagar;
+    private javax.swing.JButton btn_registrar1;
+    private javax.swing.JButton btn_tablaBuscar;
     private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -143,21 +237,81 @@ public class rPagos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox<String> metodo;
     private javax.swing.JTextField monto1;
+    private javax.swing.JTextField textoaux;
     // End of variables declaration//GEN-END:variables
 
     private void realizarPago() throws SQLException {
-        String query = "INSERT INTO Pagos (monto, fecha_pago, metodo_pagos) VALUES (?, ?, ?)";
+        int ID = obtenerUltimoID();
+        String query = "INSERT INTO Pagos (monto, fecha_pago, metodo_pago) VALUES (?, ?, ?)";
         
-        int montop = Integer.parseInt(monto1.getText());
-        String fechap = this.fecha.getDateFormatString();
-        String metodop= this.metodo.getSelectedItem().toString();
+        double montop = Double.parseDouble(monto1.getText());
+        String fechap = this.textoaux.getText();
+        String metodop= (String) this.metodo.getSelectedItem().toString();
         
         PreparedStatement insertStmt = conn.prepareStatement(query);
-            insertStmt.setInt(1, montop);
+            insertStmt.setDouble(1, montop);
             insertStmt.setString(2, fechap);
             insertStmt.setString(3, metodop);
+            
+            insertStmt.executeUpdate();
+            
+            
+        
+        if (modoDialogo){
+            JOptionPane.showMessageDialog(rootPane, "Pago realizado con exito \n    ID: "+ID+"\nID COPIADO EN EL PORTAPAPELES");
+            portapapeles(String.valueOf(ID));
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Pago realizado con exito \n    ID: "+ID);
+            this.monto1.setText("");
+        }
+    }
 
-            int filasInsertadas = insertStmt.executeUpdate();
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void abrirFormularioBusqueda() throws SQLException {
+        mBusqueda buscar = null;
+        buscar = new mBusqueda(conn, "Pagos");
+        buscar.setVisible(true);
+    }
+
+    private boolean validarInput() {
+        boolean confirmar = false;
+        try{
+            double number = Double.parseDouble(this.monto1.getText());
+            if (number >= 0){
+                confirmar = true;
+            }
+            
+        }catch (Exception e){
+        }
+        return confirmar;
+    }
+    private static boolean isFechaValida(JDateChooser dateChooser) {
+        java.util.Date selectedDate = dateChooser.getDate();
+        return selectedDate != null;
+    }
+
+    private int obtenerUltimoID() throws SQLException {
+        String ultimoIDQuery = "SELECT MAX(pago_id) AS ultimo_id FROM Pagos";
+        int nuevoID = 1; // Valor por defecto para el primer usuario
+       
+        PreparedStatement ultimoIDStmt = conn.prepareStatement(ultimoIDQuery);
+        ResultSet rs = ultimoIDStmt.executeQuery();
+        if (rs.next()) {
+            nuevoID = rs.getInt("ultimo_id") + 1;
+        }
+        return nuevoID;
+    }
+
+    private void portapapeles(String value) {
+        StringSelection stringSelection = new StringSelection(value);
+
+            // Obtener el portapapeles del sistema
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            // Copiar el texto al portapapeles
+            clipboard.setContents(stringSelection, null);
+    }
+
+    private void retornarModulo() {
+        this.dispose();
     }
 }

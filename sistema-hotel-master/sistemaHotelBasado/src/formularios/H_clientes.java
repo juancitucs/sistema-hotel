@@ -41,6 +41,8 @@ public class H_clientes extends javax.swing.JFrame {
         descripciontxt = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btn_registrar1 = new javax.swing.JButton();
+        btn_back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 153, 51));
@@ -67,7 +69,7 @@ public class H_clientes extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabla);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 18, 425, 448));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 18, 425, 450));
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(554, 18, 167, 101));
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
@@ -105,21 +107,56 @@ public class H_clientes extends javax.swing.JFrame {
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(446, 87, 96, 32));
 
         jLabel1.setText("<html>¿Desea buscar una habitación? Haga click en el siguiste botón:<html>");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 24, 94, 57));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 24, 240, 57));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 702, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 48, 740, 500));
+
+        btn_registrar1.setBackground(new java.awt.Color(255, 204, 0));
+        btn_registrar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_registrar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_registrar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_registrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrar1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_registrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 20, 30));
+
+        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/formularios/devolver.png"))); // NOI18N
+        btn_back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_back.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_back.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-       
-
+        int fila=tabla.getSelectedRow();
+        if(fila==-1){}
+        else{
+            String id=(String)tabla.getValueAt(fila,0);
+            String descripcion=(String)tabla.getValueAt(fila,6);
+            descripciontxt.setText(descripcion);
+        }
     }//GEN-LAST:event_tablaMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         buscarHabitacion();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_registrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_registrar1ActionPerformed
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,18 +222,18 @@ void limpiartabla(){
     }
 
     private void buscarHabitacion() {
-            mBusqueda buscar = null;
-            try {
-                buscar = new mBusqueda(conn, "Habitaciones");
-                buscar.setVisible(true);
-            } catch (SQLException ex) {
-                Logger.getLogger(mUsuarios.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            new mBusqueda(conn,"Habitaciones").setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(H_clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
 
      
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_registrar1;
     private javax.swing.JTextArea descripciontxt;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

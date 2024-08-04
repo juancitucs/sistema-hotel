@@ -5,6 +5,9 @@
 package formularios;
 
 //import configuracion.Conexion;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.lang.System.Logger;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -13,12 +16,15 @@ import java.sql.Date;
 import java.util.logging.Level;
 import javax.swing.JTextField;
 import sql.dbConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author USER
  */
 public class mClientes extends javax.swing.JFrame {
-    
+
     Connection cn;
     Statement st;
     ResultSet rs;
@@ -26,12 +32,47 @@ public class mClientes extends javax.swing.JFrame {
     int ID;
     private Connection conn = null;
     
+    public boolean modoDialogo = false;
+
     public mClientes() {
         initComponents();
         setLocationRelativeTo(null);
-        listar();
         conn = dbConnection.connect();
+        listar();
+    }
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(mHabitacionesAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(mHabitacionesAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(mHabitacionesAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(mHabitacionesAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new mClientes().setVisible(true);
+            }
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,16 +105,18 @@ public class mClientes extends javax.swing.JFrame {
         fondo1 = new javax.swing.JButton();
         fondo2 = new javax.swing.JButton();
         fondo4 = new javax.swing.JButton();
-        fondo5 = new javax.swing.JButton();
         editarbt = new javax.swing.JButton();
         registrartxt = new javax.swing.JButton();
-        limpiarbt = new javax.swing.JButton();
         eliminarbt = new javax.swing.JButton();
         buscarbt = new javax.swing.JButton();
+        dnitxt = new javax.swing.JTextField();
+        limpiarbt1 = new javax.swing.JButton();
+        fondo6 = new javax.swing.JButton();
         btn_mHabitaciones7 = new javax.swing.JButton();
         btn_mHabitaciones8 = new javax.swing.JButton();
         retornar1 = new javax.swing.JButton();
         fondo3 = new javax.swing.JButton();
+        btn_idCopia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -86,7 +129,7 @@ public class mClientes extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nombres", "Apellidos", "Fecha de N.", "Correo", "Nro. Celular", "Direccion", "Nacionalidad"
+                "ID", "Nombres", "Apellidos", "DNI", "Correo", "Nro. Celular", "Direccion", "Nacionalidad"
             }
         ));
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -117,8 +160,8 @@ public class mClientes extends javax.swing.JFrame {
         jLabel4.setText("Correo:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 88, 30));
 
-        jLabel5.setText("Fecha de Nacimiento:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 24, 119, 30));
+        jLabel5.setText("DNI");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 40, 30));
 
         jLabel6.setText("Direccion:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 80, 30));
@@ -159,7 +202,7 @@ public class mClientes extends javax.swing.JFrame {
                 nrotxtActionPerformed(evt);
             }
         });
-        jPanel1.add(nrotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 60, 167, 30));
+        jPanel1.add(nrotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 167, 30));
 
         nacionalidadtxt.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         nacionalidadtxt.addActionListener(new java.awt.event.ActionListener() {
@@ -186,10 +229,6 @@ public class mClientes extends javax.swing.JFrame {
         fondo4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         jPanel1.add(fondo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 20, 20));
 
-        fondo5.setBackground(new java.awt.Color(255, 204, 0));
-        fondo5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jPanel1.add(fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 20, 20));
-
         editarbt.setText("EDITAR   ");
         editarbt.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         editarbt.addActionListener(new java.awt.event.ActionListener() {
@@ -208,15 +247,6 @@ public class mClientes extends javax.swing.JFrame {
         });
         jPanel1.add(registrartxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 100, 20));
 
-        limpiarbt.setText("LIMPIAR   ");
-        limpiarbt.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        limpiarbt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limpiarbtActionPerformed(evt);
-            }
-        });
-        jPanel1.add(limpiarbt, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, 100, 20));
-
         eliminarbt.setText("ELIMINAR   ");
         eliminarbt.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         eliminarbt.addActionListener(new java.awt.event.ActionListener() {
@@ -234,6 +264,27 @@ public class mClientes extends javax.swing.JFrame {
             }
         });
         jPanel1.add(buscarbt, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 150, 40, 30));
+
+        dnitxt.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        dnitxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dnitxtActionPerformed(evt);
+            }
+        });
+        jPanel1.add(dnitxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 167, 30));
+
+        limpiarbt1.setText("LIMPIAR   ");
+        limpiarbt1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        limpiarbt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpiarbt1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(limpiarbt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, 100, 20));
+
+        fondo6.setBackground(new java.awt.Color(255, 204, 0));
+        fondo6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        jPanel1.add(fondo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 20, 20));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 780, 210));
 
@@ -258,30 +309,39 @@ public class mClientes extends javax.swing.JFrame {
         fondo3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         jPanel2.add(fondo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 10, 30));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 530));
+        btn_idCopia.setText("CopiarID");
+        btn_idCopia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        btn_idCopia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_idCopiaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_idCopia, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 510, 100, 20));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-int fila=tabla.getSelectedRow();
-        if(fila==-1){}
-        else{
-            String nombres=(String)tabla.getValueAt(fila,1);
+        int fila = tabla.getSelectedRow();
+        if (fila == -1) {
+        } else {
+            String nombres = (String) tabla.getValueAt(fila, 1);
             this.nombrestxt.setText(nombres);
-            String apellidos=(String)tabla.getValueAt(fila,2);
-            this.apellidostxt.setText(apellidos);            
-            Date fecha=(Date) tabla.getValueAt(fila,3);
-            this.fechatxt.setDate(fecha);
-            String correo=(String)tabla.getValueAt(fila,4);
+            String apellidos = (String) tabla.getValueAt(fila, 2);
+            this.apellidostxt.setText(apellidos);
+            String dni = (String) tabla.getValueAt(fila, 3);
+            this.dnitxt.setText(dni);
+            String correo = (String) tabla.getValueAt(fila, 4);
             this.correotxt.setText(correo);
-            String nro=(String)tabla.getValueAt(fila,5);
+            String nro = (String) tabla.getValueAt(fila, 5);
             this.nrotxt.setText(nro);
-            String direccion=(String)tabla.getValueAt(fila,6);
+            String direccion = (String) tabla.getValueAt(fila, 6);
             this.direcciontxt.setText(direccion);
-            String nacionalidad=(String)tabla.getValueAt(fila,7);
+            String nacionalidad = (String) tabla.getValueAt(fila, 7);
             this.nacionalidadtxt.setText(nacionalidad);
-        }        
+        }
     }//GEN-LAST:event_tablaMouseClicked
 
     private void tablaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseEntered
@@ -310,23 +370,18 @@ int fila=tabla.getSelectedRow();
 
     private void editarbtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarbtActionPerformed
         editar();
-        listar();
     }//GEN-LAST:event_editarbtActionPerformed
 
     private void registrartxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrartxtActionPerformed
         registrar();
-        listar();
-        nuevo();
     }//GEN-LAST:event_registrartxtActionPerformed
 
-    private void limpiarbtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarbtActionPerformed
-        nuevo();
-    }//GEN-LAST:event_limpiarbtActionPerformed
+    private void btn_idCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_idCopiaActionPerformed
+        copiarID();
+    }//GEN-LAST:event_btn_idCopiaActionPerformed
 
     private void eliminarbtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarbtActionPerformed
         eliminar();
-        listar();
-        nuevo();
     }//GEN-LAST:event_eliminarbtActionPerformed
 
     private void buscarbtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarbtActionPerformed
@@ -334,47 +389,69 @@ int fila=tabla.getSelectedRow();
     }//GEN-LAST:event_buscarbtActionPerformed
 
     private void retornar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retornar1ActionPerformed
-        this.setVisible(false);
+
         retornarModulo();
     }//GEN-LAST:event_retornar1ActionPerformed
 
-public void retornarModulo(){
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new mSelectorModulos().setVisible(true);
-            }
-            
-        });
-    }    
-    
+    private void dnitxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dnitxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dnitxtActionPerformed
+
+    private void limpiarbt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarbt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_limpiarbt1ActionPerformed
+
+    public void retornarModulo() {
+        this.dispose();
+    }
+
     /**
      * @param args the command line arguments
      */
-void editar(){
-        String nombres=nombrestxt.getText();
-        String apellidos=apellidostxt.getText();
-        String nro=nrotxt.getText();
-        String correo=correotxt.getText();
-        String direccion=direcciontxt.getText();
-        String nacionalidad=nacionalidadtxt.getText();
-        String fecha=((JTextField)fechatxt.getDateEditor().getUiComponent()).getText();
-        int fila=tabla.getSelectedRow();
-        int id=(int) tabla.getValueAt(fila,0);
-        String sql="update clientes set nombre='"+nombres+"',apellido='"+apellidos+"',fecha_nacimiento='"+fecha+"',correo_electronico='"+correo+"',telefono='"+nro+"',direccion='"+direccion+"',nacionalidad='"+nacionalidad+"' where cliente_id="+id;
-        if(nro.equals("")||nombres.equals("")||apellidos.equals("")||fecha.equals("")||correo.equals("")||direccion.equals("")||nacionalidad.equals("")){
+    void editar() {
+        String nombres = nombrestxt.getText();
+        String apellidos = apellidostxt.getText();
+        String nro = nrotxt.getText();
+        String correo = correotxt.getText();
+        String direccion = direcciontxt.getText();
+        String nacionalidad = nacionalidadtxt.getText();
+        String dni = dnitxt.getText();
+        int fila = tabla.getSelectedRow();
+        int id = (int) tabla.getValueAt(fila, 0);
+        int DN = Integer.parseInt((String) tabla.getValueAt(fila, 3).toString());
+        if (nro.equals("") || nombres.equals("") || apellidos.equals("") || dni.equals("") || correo.equals("") || direccion.equals("") || nacionalidad.equals("")) {
             JOptionPane.showMessageDialog(null, "Debe ingresar datos en las cajas.");
-            }else{
-                try{
+        } else {
+            int contador_de_errores = 0;
+            for (int i = 0; i < tabla.getRowCount(); i++) {
+                int DNI = Integer.parseInt((String) tabla.getValueAt(i, 3).toString());
+                if (DNI == Integer.parseInt(dni)) {
+                    contador_de_errores = 1;
+                }
+            }
+            if (DN == Integer.parseInt(dni)) {
+                contador_de_errores = 0;
+            }
+            String sql = "update Clientes set nombre='" + nombres + "',apellido='" + apellidos + "',dni='" + dni + "',correo_electronico='" + correo + "',telefono='" + nro + "',direccion='" + direccion + "',nacionalidad='" + nacionalidad + "' where cliente_id=" + id;
+            if (contador_de_errores == 0) {
+                try {
                     cn = dbConnection.connect();
-                    st=cn.createStatement();
+                    st = cn.createStatement();
                     st.executeUpdate(sql);
                     limpiartabla();
-                }catch(Exception e){}
-            }
-        }
 
-private void buscarCliente() {
+                } catch (Exception e) {
+                }
+                listar();
+                nuevo();
+            } else {
+                JOptionPane.showMessageDialog(null, "Los nombres y apellidos que ingreso ya fue registrada en el sistema.");
+            }
+
+        }
+    }
+
+    private void buscarCliente() {
         mBusqueda buscar = null;
         try {
             buscar = new mBusqueda(conn, "Clientes");
@@ -384,86 +461,110 @@ private void buscarCliente() {
         }
     }
 
-
-void eliminar(){
-        int fila=tabla.getSelectedRow();
-        int id=(int) tabla.getValueAt(fila,0);
-        if(fila==-1){
-        }else{
-            String sql="delete from Clientes where cliente_id="+id;
-            try{
-                cn=dbConnection.connect();
-                st=cn.createStatement();
-                st.executeUpdate(sql);
-                limpiartabla();
-            }catch(Exception e){}
-        }
-    }
-void registrar(){
-    String nombres=nombrestxt.getText();
-    String fecha=((JTextField)fechatxt.getDateEditor().getUiComponent()).getText();
-    String apellidos=apellidostxt.getText();
-    String correo=correotxt.getText();
-    String nro=nrotxt.getText();
-    String direccion=direcciontxt.getText();
-    String nacionalidad=nacionalidadtxt.getText();
-    if(nro.equals("")||nombres.equals("")||apellidos.equals("")||fecha.equals("")||correo.equals("")||direccion.equals("")||nacionalidad.equals("")){
-            JOptionPane.showMessageDialog(null, "Debe ingresar datos en las cajas.");
-        }else{
-            String sql="insert into Clientes(nombre,apellido,fecha_nacimiento,correo_electronico,telefono,direccion,nacionalidad)values('"+nombres+"','"+apellidos+"','"+fecha+"','"+correo+"','"+nro+"','"+direccion+"','"+nacionalidad+"')";            
-            try{
+    void eliminar() {
+        int fila = tabla.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "Se requiere seleccionar un cliente");
+        } else {
+            int id = (int) tabla.getValueAt(fila, 0);
+            String sql = "delete from Clientes where cliente_id=" + id;
+            try {
                 cn = dbConnection.connect();
-                st=cn.createStatement();
+                st = cn.createStatement();
                 st.executeUpdate(sql);
                 limpiartabla();
-            }catch(Exception e){}
-
-        }
-}
-void limpiartabla(){
-        for (int i=0;i<=tabla.getRowCount();i++){
-            modelo.removeRow(i);
-            i=i-1;
+            } catch (SQLException e) {
+            }
+            listar();
+            nuevo();
         }
     }
-void nuevo(){
+
+    void registrar() {
+        String nombres = nombrestxt.getText();
+        String dni = dnitxt.getText();
+        String apellidos = apellidostxt.getText();
+        String correo = correotxt.getText();
+        String nro = nrotxt.getText();
+        String direccion = direcciontxt.getText();
+        String nacionalidad = nacionalidadtxt.getText();
+
+        if (nro.equals("") || nombres.equals("") || apellidos.equals("") || dni.equals("") || correo.equals("") || direccion.equals("") || nacionalidad.equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar datos en las cajas.");
+        } else {
+            int contador_de_errores = 0;
+            for (int i = 0; i < tabla.getRowCount(); i++) {
+                int DNI = Integer.parseInt((String) tabla.getValueAt(i, 3).toString());
+                if (DNI == Integer.parseInt(dni)) {
+                    contador_de_errores = 1;
+                }
+            }
+            if (contador_de_errores == 0) {
+                String sql = "insert into Clientes(nombre,apellido,dni,correo_electronico,telefono,direccion,nacionalidad)values('" + nombres + "','" + apellidos + "','" + dni + "','" + correo + "','" + nro + "','" + direccion + "','" + nacionalidad + "')";
+                try {
+                    cn = dbConnection.connect();
+                    st = cn.createStatement();
+                    st.executeUpdate(sql);
+                    limpiartabla();
+                } catch (Exception e) {
+                }
+                listar();
+                nuevo();
+            } else {
+                JOptionPane.showMessageDialog(null, "El dni que ingreso ya fue registrado en el sistema.");
+            }
+        }
+    }
+
+    void limpiartabla() {
+        for (int i = 0; i <= tabla.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i = i - 1;
+        }
+    }
+
+    void nuevo() {
         nombrestxt.setText("");
         nrotxt.setText("");
         correotxt.setText("");
         apellidostxt.setText("");
         nacionalidadtxt.setText("");
         direcciontxt.setText("");
-        fechatxt.setDate(null);
+        dnitxt.setText("");
     }
-void listar(){
-    String sql="select * from Clientes";
+
+    void listar() {
+        String sql = "select * from Clientes";
         try {
-            cn=dbConnection.connect();
-            st=cn.createStatement();
-            rs=st.executeQuery(sql);
-            Object[]clientes=new Object[8];
-            modelo=(DefaultTableModel)tabla.getModel();
-            while(rs.next()){
-                clientes[0]=rs.getInt("cliente_id");
-                clientes[1]=rs.getString("nombre");
-                clientes[2]=rs.getString("apellido");
-                clientes[3]=rs.getDate("fecha_nacimiento");
-                clientes[4]=rs.getString("correo_electronico");
-                clientes[5]=rs.getString("telefono");
-                clientes[6]=rs.getString("direccion");
-                clientes[7]=rs.getString("nacionalidad");
+            cn = dbConnection.connect();
+            st = cn.createStatement();
+            rs = st.executeQuery(sql);
+            Object[] clientes = new Object[8];
+            modelo = (DefaultTableModel) tabla.getModel();
+            while (rs.next()) {
+                clientes[0] = rs.getInt("cliente_id");
+                clientes[1] = rs.getString("nombre");
+                clientes[2] = rs.getString("apellido");
+                clientes[3] = rs.getString("dni");
+                clientes[4] = rs.getString("correo_electronico");
+                clientes[5] = rs.getString("telefono");
+                clientes[6] = rs.getString("direccion");
+                clientes[7] = rs.getString("nacionalidad");
                 modelo.addRow(clientes);
-                }
+            }
             tabla.setModel(modelo);
-            } catch(Exception e){}
-}
+        } catch (Exception e) {
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellidostxt;
+    private javax.swing.JButton btn_idCopia;
     private javax.swing.JButton btn_mHabitaciones7;
     private javax.swing.JButton btn_mHabitaciones8;
     private javax.swing.JButton buscarbt;
     private javax.swing.JTextField correotxt;
     private javax.swing.JTextField direcciontxt;
+    private javax.swing.JTextField dnitxt;
     private javax.swing.JButton editarbt;
     private javax.swing.JButton eliminarbt;
     private javax.swing.JButton fondo;
@@ -471,7 +572,7 @@ void listar(){
     private javax.swing.JButton fondo2;
     private javax.swing.JButton fondo3;
     private javax.swing.JButton fondo4;
-    private javax.swing.JButton fondo5;
+    private javax.swing.JButton fondo6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -483,7 +584,7 @@ void listar(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton limpiarbt;
+    private javax.swing.JButton limpiarbt1;
     private javax.swing.JTextField nacionalidadtxt;
     private javax.swing.JTextField nombrestxt;
     private javax.swing.JTextField nrotxt;
@@ -492,5 +593,26 @@ void listar(){
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 
-    
+    private void copiarID() {
+        int fila = tabla.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una columna!");
+        } else {
+            String ID = (String) tabla.getValueAt(fila, 0).toString();
+            portapapeles(ID);
+            JOptionPane.showMessageDialog(rootPane, "ID: " + ID + "\nCopiado al portapapeles");
+            this.retornarModulo();
+        }
+
+    }
+
+    private void portapapeles(String value) {
+        StringSelection stringSelection = new StringSelection(value);
+
+        // Obtener el portapapeles del sistema
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        // Copiar el texto al portapapeles
+        clipboard.setContents(stringSelection, null);
+    }
+
 }

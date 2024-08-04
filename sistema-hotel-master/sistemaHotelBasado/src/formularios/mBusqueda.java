@@ -71,6 +71,7 @@ public class mBusqueda extends javax.swing.JFrame {
         btn_back = new javax.swing.JButton();
         btn_registrar1 = new javax.swing.JButton();
         txts = new javax.swing.JSeparator();
+        btn_refrescar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -102,14 +103,14 @@ public class mBusqueda extends javax.swing.JFrame {
         });
         jPanel1.add(cbox_column, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 20));
 
-        btn_seleccionar.setText("buscar");
+        btn_seleccionar.setText("Seleccionar");
         btn_seleccionar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         btn_seleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_seleccionarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, 60, -1));
+        jPanel1.add(btn_seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 330, 80, -1));
 
         tf_barraBusqueda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         tf_barraBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -156,6 +157,14 @@ public class mBusqueda extends javax.swing.JFrame {
         txts.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         jPanel1.add(txts, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 600, 330));
 
+        btn_refrescar.setText("Refrescar");
+        btn_refrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refrescarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_refrescar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 380));
 
         pack();
@@ -179,7 +188,7 @@ public class mBusqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_barraBusquedaKeyReleased
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
-        this.setVisible(false);
+        this.dispose();
 
     }//GEN-LAST:event_btn_backActionPerformed
 
@@ -192,12 +201,22 @@ public class mBusqueda extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btn_seleccionarActionPerformed
 
+    private void btn_refrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refrescarActionPerformed
+        String buscador = this.tf_barraBusqueda.getText();
+        try {
+            llenarTabla(conn,tableName,buscador);
+        } catch (SQLException ex) {
+            Logger.getLogger(mBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_refrescarActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_refrescar;
     private javax.swing.JButton btn_registrar1;
     private javax.swing.JButton btn_seleccionar;
     private javax.swing.JComboBox<String> cbox_column;
@@ -261,13 +280,13 @@ public class mBusqueda extends javax.swing.JFrame {
     }
     
         public void modoSeleccion() {
-        this.btn_seleccionar.setEnabled(false);
+        this.btn_seleccionar.setEnabled(true);
     }
 
     public void obtenerIDSeleccion() {
         int selectedRow = tbl_filter.getSelectedRow();
         if (selectedRow != -1) {
-            idSeleccionado = (String) tbl_filter.getValueAt(selectedRow, 0);
+            idSeleccionado = (String) tbl_filter.getValueAt(selectedRow, 0).toString();
             System.out.println(idSeleccionado);
 
             this.dispose();
@@ -277,7 +296,8 @@ public class mBusqueda extends javax.swing.JFrame {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             // Copiar el texto al portapapeles
             clipboard.setContents(stringSelection, null);
-            JOptionPane.showMessageDialog(rootPane,"Texto copiado al portapapeles: " + idSeleccionado);
+            JOptionPane.showMessageDialog(rootPane,"ID copiado al portapapeles: " + idSeleccionado);
+            this.dispose();
         };
     }
     

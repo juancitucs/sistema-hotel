@@ -61,6 +61,8 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
         buscarbtn = new javax.swing.JButton();
         nuevobtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        btn_back = new javax.swing.JButton();
+        btn_registrar1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -173,7 +175,7 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
         });
         jPanel1.add(preciotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(204, 102, 106, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 312, 189));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 312, 189));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Descripcion:"));
 
@@ -200,7 +202,7 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
                 registrarbtnActionPerformed(evt);
             }
         });
-        getContentPane().add(registrarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 19, 150, 30));
+        getContentPane().add(registrarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 150, 30));
 
         editarbtn.setText("EDITAR");
         editarbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -208,7 +210,7 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
                 editarbtnActionPerformed(evt);
             }
         });
-        getContentPane().add(editarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 129, 150, 30));
+        getContentPane().add(editarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 150, 30));
 
         eliminarbtn.setText("ELIMINAR");
         eliminarbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -216,7 +218,7 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
                 eliminarbtnActionPerformed(evt);
             }
         });
-        getContentPane().add(eliminarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 55, 150, 30));
+        getContentPane().add(eliminarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 150, 30));
 
         buscarbtn.setText("BUSCAR");
         buscarbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +226,7 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
                 buscarbtnActionPerformed(evt);
             }
         });
-        getContentPane().add(buscarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 165, 150, 30));
+        getContentPane().add(buscarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 150, 30));
 
         nuevobtn.setText("LIMPIAR");
         nuevobtn.addActionListener(new java.awt.event.ActionListener() {
@@ -232,8 +234,30 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
                 nuevobtnActionPerformed(evt);
             }
         });
-        getContentPane().add(nuevobtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 91, 150, 30));
+        getContentPane().add(nuevobtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 150, 30));
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(474, 6, -1, -1));
+
+        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/formularios/devolver.png"))); // NOI18N
+        btn_back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_back.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_back.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 30, 30));
+
+        btn_registrar1.setBackground(new java.awt.Color(255, 204, 0));
+        btn_registrar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_registrar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_registrar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_registrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrar1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_registrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 20, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -287,21 +311,20 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
         int fila=tabla.getSelectedRow();
         if(fila==-1){}
         else{
-            String estado=(String)tabla.getValueAt(fila,5);
-            estadocb.setSelectedItem(estado);
-            String tipo=(String)tabla.getValueAt(fila,3);
-            tipocb.setSelectedItem(tipo);
-            String nro=(String)tabla.getValueAt(fila,1);
-            nrotxt.setText(nro);
             String id=(String)tabla.getValueAt(fila,0);
             idtxt.setText(id);
-            String piso=(String)tabla.getValueAt(fila,2);
-            pisotxt.setText(piso);
-            String precio=(String)tabla.getValueAt(fila,4);
-            preciotxt.setText(precio);
+            int nro=Integer.parseInt((String)tabla.getValueAt(fila,1).toString());
+            nrotxt.setText(""+nro);
+            int piso=Integer.parseInt((String)tabla.getValueAt(fila,2).toString());
+            pisotxt.setText(""+piso);
+            String tipo=(String)tabla.getValueAt(fila,3);
+            tipocb.setSelectedItem(tipo);
+            double precio=Double.parseDouble((String)tabla.getValueAt(fila,4).toString());
+            preciotxt.setText(""+precio);
+            String estado=(String)tabla.getValueAt(fila,5);
+            estadocb.setSelectedItem(estado);
             String descripcion=(String)tabla.getValueAt(fila,6);
             descripciontxt.setText(descripcion);
-            
         }
     }//GEN-LAST:event_tablaMouseClicked
 
@@ -318,6 +341,14 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
     private void pisotxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pisotxtMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_pisotxtMouseExited
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        retornarModulo();
+    }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_registrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_registrar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -401,20 +432,29 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
         }
         String id="H"+nro+"P"+piso+t;
         String descripcion=descripciontxt.getText();
-
-
         if(nro.equals("")||piso.equals("")||precio.equals("")){
             JOptionPane.showMessageDialog(null, "Debe ingresar datos en las cajas.");
         }else{
-            String sql="insert into Habitaciones(habitacion_id,numero_habitacion,piso,precio_noche,tipo_habitacion,estado,descripcion)values('"+id+"','"+nro+"','"+piso+"','"+precio+"','"+tipo+"','"+estado+"','"+descripcion+"')";
-            try{
-                cn = dbConnection.connect();
-                st=cn.createStatement();
-                st.executeUpdate(sql);
-                limpiartabla();
-            }catch(Exception e){}
-               listar();
-               nuevo();
+            int contador_de_errores=0;
+            for (int i=0;i<tabla.getRowCount();i++){
+                int NRO=Integer.parseInt((String)tabla.getValueAt(i,1).toString());
+                if(NRO==Integer.parseInt(nro)){
+                    contador_de_errores=1;
+                }
+            }
+            if(contador_de_errores==0){
+                String sql="insert into Habitaciones(habitacion_id,numero_habitacion,piso,precio_noche,tipo_habitacion,estado,descripcion)values('"+id+"','"+nro+"','"+piso+"','"+precio+"','"+tipo+"','"+estado+"','"+descripcion+"')";
+                try{
+                    cn = dbConnection.connect();
+                    st=cn.createStatement();
+                    st.executeUpdate(sql);
+                    limpiartabla();
+                }catch(Exception e){}
+                listar();
+                nuevo();
+            }else{
+                JOptionPane.showMessageDialog(null, "El numero de habitacion que ingreso ya fue registrada en el sistema.");
+            }
         }
     }
     void limpiartabla(){
@@ -424,22 +464,57 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
         }
     }
     void editar(){
+        int fila=tabla.getSelectedRow();
         String precio=preciotxt.getText();
-        String nro=nrotxt.getText();      
+        String piso=pisotxt.getText();
+        String nro=nrotxt.getText();
         String estado=estadocb.getSelectedItem().toString();
         String descripcion=descripciontxt.getText();
-        String sql="update Habitaciones set precio_noche='"+precio+"',estado='"+estado+"',descripcion='"+descripcion+"' where numero_habitacion="+nro;
-        if(precio.equals("")){
-            JOptionPane.showMessageDialog(null, "Se requiere ingresar datos ");
+        String tipo=tipocb.getSelectedItem().toString();
+        String t=null;
+        if(tipo.equals("Normal")){
+            t="N";
+        }
+        if(tipo.equals("Familiar")){
+            t="F";
+        }
+        if(tipo.equals("Matrimonial")){
+            t="M";
+        }
+        if(tipo.equals("Suite")){
+            t="S";
+        }
+        if(tipo.equals("Gran Suite")){
+            t="L";
+        }
+        int NR=Integer.parseInt((String)tabla.getValueAt(fila,1).toString());
+        String id="H"+nro+"P"+piso+t;
+        if(nro.equals("")||piso.equals("")||precio.equals("")){
+            JOptionPane.showMessageDialog(null, "Se requiere seleccionar una habitacion");
             }else{
-                try{
-                    cn = dbConnection.connect();
-                    st=cn.createStatement();
-                    st.executeUpdate(sql);
-                    limpiartabla();
-                }catch(Exception e){}
-                listar();
-                nuevo();
+                int contador_de_errores=0;
+                for (int i=0;i<tabla.getRowCount();i++){
+                    int NRO=Integer.parseInt((String)tabla.getValueAt(i,1).toString());
+                    if(NRO==Integer.parseInt(nro)){
+                        contador_de_errores=1;
+                    }
+                }
+                if(NR==Integer.parseInt(nro)){
+                    contador_de_errores=0;
+                }                
+                String sql="update Habitaciones set precio_noche='"+precio+"',estado='"+estado+"',descripcion='"+descripcion+"',piso='"+piso+"',habitacion_id='"+id+"',tipo_habitacion='"+tipo+"',numero_habitacion='"+nro+"' where numero_habitacion="+NR;
+                if(contador_de_errores==0){
+                    try{
+                        cn = dbConnection.connect();
+                        st=cn.createStatement();
+                        st.executeUpdate(sql);
+                        limpiartabla();
+                    }catch(Exception e){}
+                    listar();
+                    nuevo();
+                }else{
+                    JOptionPane.showMessageDialog(null, "El numero de habitacion ya fue registrada para otra habitacion.");
+                }
             }
         }
     
@@ -452,9 +527,22 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
     }
     
     void eliminarHabitacion() {
-        String id = (JOptionPane.showInputDialog("Ingrese id de habitacion"));
-        eliminarID(id);
-        //this.tbl_usuarios.removeAll();
+        int fila=tabla.getSelectedRow();
+        if(fila==-1||nrotxt.equals("")){
+            JOptionPane.showMessageDialog(null, "Se requiere seleccionar una habitacion");
+        }else{
+            int nro=Integer.parseInt((String)tabla.getValueAt(fila,1).toString());
+            nrotxt.setText(""+nro);
+            String sql="delete from Habitaciones where numero_habitacion="+nro;
+            try{
+                cn = dbConnection.connect();
+                st=cn.createStatement();
+                st.executeUpdate(sql);
+                limpiartabla();
+            }catch(Exception e){}
+            listar();
+            nuevo();
+        }
     }
     
     private void eliminarID(String id) {
@@ -483,6 +571,8 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
  
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_registrar1;
     private javax.swing.JButton buscarbtn;
     private javax.swing.JTextArea descripciontxt;
     private javax.swing.JButton editarbtn;
@@ -510,5 +600,9 @@ public class mHabitacionesAdmin extends javax.swing.JFrame {
     private javax.swing.JTable tabla;
     private javax.swing.JComboBox<String> tipocb;
     // End of variables declaration//GEN-END:variables
+
+    private void retornarModulo() {
+        this.dispose();
+    }
    }
 

@@ -1,5 +1,8 @@
 package formularios;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,6 +83,7 @@ public class mReservas extends javax.swing.JFrame {
         BtnEliminar = new javax.swing.JButton();
         BtnModificar = new javax.swing.JButton();
         BtnNuevo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaReserv = new javax.swing.JTable();
@@ -88,8 +92,8 @@ public class mReservas extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         dateReserva = new com.toedter.calendar.JDateChooser();
         dateIngreso = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
-        btn_moduloHabitacion = new javax.swing.JButton();
+        btn_back = new javax.swing.JButton();
+        btn_registrar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -152,6 +156,11 @@ public class mReservas extends javax.swing.JFrame {
         });
 
         btn_moduloPaago.setText("+");
+        btn_moduloPaago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_moduloPaagoActionPerformed(evt);
+            }
+        });
 
         btn_buscarPago.setText("b");
         btn_buscarPago.addActionListener(new java.awt.event.ActionListener() {
@@ -253,20 +262,30 @@ public class mReservas extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("REFRESCAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(BtnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(BtnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +296,9 @@ public class mReservas extends javax.swing.JFrame {
                     .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 299, 470, -1));
@@ -315,7 +336,7 @@ public class mReservas extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 52, -1, 235));
@@ -361,20 +382,27 @@ public class mReservas extends javax.swing.JFrame {
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 240, -1, -1));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/formularios/devolver.png"))); // NOI18N
+        btn_back.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_back.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_back.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_backActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(694, 377, -1, -1));
+        getContentPane().add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-        btn_moduloHabitacion.addActionListener(new java.awt.event.ActionListener() {
+        btn_registrar1.setBackground(new java.awt.Color(255, 204, 0));
+        btn_registrar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btn_registrar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_registrar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_registrar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_moduloHabitacionActionPerformed(evt);
+                btn_registrar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_moduloHabitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(btn_registrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 20, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -435,14 +463,6 @@ public class mReservas extends javax.swing.JFrame {
         listar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btn_moduloHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_moduloHabitacionActionPerformed
-        try {
-            obtenerIDhabitaciones();
-        } catch (SQLException ex) {
-            Logger.getLogger(mReservas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btn_moduloHabitacionActionPerformed
-
     private void btn_moduloHabitacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_moduloHabitacion1ActionPerformed
         try {
             obtenerIDhabitaciones();
@@ -470,6 +490,18 @@ public class mReservas extends javax.swing.JFrame {
             Logger.getLogger(mReservas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_buscarPagoActionPerformed
+
+    private void btn_moduloPaagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_moduloPaagoActionPerformed
+        abrirDialogoPagos();
+    }//GEN-LAST:event_btn_moduloPaagoActionPerformed
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        retornarModulo();
+    }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_registrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_registrar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -598,12 +630,13 @@ public class mReservas extends javax.swing.JFrame {
     private javax.swing.JButton BtnNuevo;
     private javax.swing.JPanel Ingreso1;
     private javax.swing.JTable TablaReserv;
+    private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_buscarCliente;
     private javax.swing.JButton btn_buscarPago;
     private javax.swing.JButton btn_moduloCliente;
-    private javax.swing.JButton btn_moduloHabitacion;
     private javax.swing.JButton btn_moduloHabitacion1;
     private javax.swing.JButton btn_moduloPaago;
+    private javax.swing.JButton btn_registrar1;
     private com.toedter.calendar.JDateChooser dateIngreso;
     private com.toedter.calendar.JDateChooser dateReserva;
     private javax.swing.JButton jButton1;
@@ -677,7 +710,25 @@ public class mReservas extends javax.swing.JFrame {
 
     private void abrirClientes() {
         mClientes modulo = new mClientes();
+        modulo.modoDialogo = true;
         modulo.setVisible(true);
     }
-    
+
+    private void abrirDialogoPagos() {
+        rPagos modulo = new rPagos();
+        modulo.modoDialogo = true;
+        modulo.setVisible(true);
+    }
+    private void portapapeles(String value) {
+        StringSelection stringSelection = new StringSelection(value);
+
+            // Obtener el portapapeles del sistema
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            // Copiar el texto al portapapeles
+            clipboard.setContents(stringSelection, null);
+    }
+
+    private void retornarModulo() {
+        this.dispose();
+    }
 }

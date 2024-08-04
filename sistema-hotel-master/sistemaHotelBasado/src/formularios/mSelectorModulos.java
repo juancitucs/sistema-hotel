@@ -200,11 +200,12 @@ public class mSelectorModulos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel letras17;
     // End of variables declaration//GEN-END:variables
-    public void desabilitarModulos() {
+    public mSelectorModulos desabilitarModulos() {
         this.btn_mUsuarios.setEnabled(false);
         this.btn_mUsuarios1.setEnabled(false);
         
         habitacionAdmin = false;
+        return this;
     }
     
     public void abrirLogin(){
@@ -218,37 +219,22 @@ public class mSelectorModulos extends javax.swing.JFrame {
     }
 
     private void abrirHabitacionesAdmin() {
-        mHabitacionesAdmin modulo = new mHabitacionesAdmin();
-        modulo.setVisible(true);
-        this.setVisible(false);
+        new mHabitacionesAdmin().setVisible(true);
     }
     private void abrirHabitaciones() {
-        H_empleados modulo = new H_empleados();
-        modulo.setVisible(true);
-        this.setVisible(false);
+        new H_empleados().setVisible(true);
     }
 
     private void abrirClientes() {
-        mClientes modulo = new mClientes();
-        modulo.setVisible(true);
-        this.setVisible(false);
+        new mClientes().setVisible(true);
     }
 
-    private void abrirEmpleados() {
-        mEmpleados modulo = new mEmpleados();
-        modulo.setVisible(true);
-        this.setVisible(false);
-    }
     
     private void abrirUsuarios() {
-        mUsuarios modulo = new mUsuarios();
-        modulo.setVisible(true);
-        this.setVisible(false);
+        new mUsuarios().setVisible(true);
     }
 
     private void abrirReservas() {
-        mReservas modulo = new mReservas();
-        modulo.setVisible(true);
-        this.setVisible(false);
+        new mReservas().setVisible(true);
     }
     }

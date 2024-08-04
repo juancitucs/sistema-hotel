@@ -271,7 +271,6 @@ public class mUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
-        this.setVisible(false);
         retornarModulo();
     }//GEN-LAST:event_btn_backActionPerformed
 
@@ -350,13 +349,7 @@ public class mUsuarios extends javax.swing.JFrame {
     // retornar //
     
     public void retornarModulo(){
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new mSelectorModulos().setVisible(true);
-            }
-            
-        });
+        this.dispose();
     }
 
     //Registrar usuarios

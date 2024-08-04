@@ -167,8 +167,10 @@ public class mUsuariosModificar extends javax.swing.JFrame {
     private void btn_aplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aplicarActionPerformed
         boolean modoCrear = this.chk_new.isSelected();
         if (modoCrear) {
-            
-            añadirUsuario(conn);
+            if (comprobarUsuario(this.tf_nombre.getText())){
+            añadirUsuario(conn);}else{
+                JOptionPane.showMessageDialog(rootPane, "Usuario ya existente");
+            }
         } else {
             if(this.tf_nombre.getText().equals("---") || this.tf_contra.getText().equals("---")){
                 JOptionPane.showMessageDialog(rootPane, "El usuario no existe");
@@ -194,6 +196,11 @@ public class mUsuariosModificar extends javax.swing.JFrame {
             try {
                 this.tf_id.setText(String.valueOf(ultimoIdDisponible(conn)));
                 this.tf_id.setEnabled(false);
+                this.tf_nombre.setEnabled(true);
+                this.tf_contra.setEnabled(true);
+                this.chk_admin.setEnabled(true);
+                this.btn_aplicar.setEnabled(true);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(mUsuariosModificar.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -408,6 +415,21 @@ public class mUsuariosModificar extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean comprobarUsuario(String usuario) {
+        String consultaSQL = "SELECT COUNT(*) FROM Usuarios WHERE nombre_usuario = ?";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(consultaSQL)) {
+            preparedStatement.setString(1, usuario);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count == 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }
 }
